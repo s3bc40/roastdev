@@ -1,0 +1,32 @@
+[
+  {
+    "id": "q1",
+    "text": "What's the best way to handle state in a React app?",
+    "answers": [
+      { "id": "a1", "text": "useState everywhere, no rules" },
+      { "id": "a2", "text": "Redux, always Redux" },
+      { "id": "a3", "text": "Zustand and chill" },
+      { "id": "a4", "text": "Server state only, React Query FTW" }
+    ]
+  },
+  {
+    "id": "q2",
+    "text": "Which CSS approach do you actually ship to production?",
+    "answers": [
+      { "id": "a1", "text": "Plain CSS, I'm not afraid" },
+      { "id": "a2", "text": "Tailwind or death" },
+      { "id": "a3", "text": "CSS Modules" },
+      { "id": "a4", "text": "CSS-in-JS (styled-components / Emotion)" }
+    ]
+  },
+  {
+    "id": "q3",
+    "text": "Tabs or spaces?",
+    "answers": [
+      { "id": "a1", "text": "Tabs, semantic and accessible" },
+      { "id": "a2", "text": "2 spaces, fight me" },
+      { "id": "a3", "text": "4 spaces, readable code matters" },
+      { "id": "a4", "text": "Whatever Prettier decides" }
+    ]
+  }
+]
