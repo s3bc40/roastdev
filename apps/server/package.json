@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint": "eslint src",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "dotenv": "^16.4.5",
