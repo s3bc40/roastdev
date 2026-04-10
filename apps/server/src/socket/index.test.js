@@ -1,4 +1,12 @@
-import { describe, it, expect, vi, beforeAll, afterAll, beforeEach } from 'vitest';
+import {
+  describe,
+  it,
+  expect,
+  vi,
+  beforeAll,
+  afterAll,
+  beforeEach,
+} from 'vitest';
 import { io as ioc } from 'socket.io-client';
 
 // --- DB mocks (must be hoisted before app import) ---
@@ -34,20 +42,33 @@ function waitFor(socket, event) {
 // --- Lifecycle ---
 
 beforeAll(() => new Promise((resolve) => server.listen(PORT, resolve)));
-afterAll(() => new Promise((resolve) => { io.close(); server.close(resolve); }));
+afterAll(
+  () =>
+    new Promise((resolve) => {
+      io.close();
+      server.close(resolve);
+    })
+);
 beforeEach(() => vi.clearAllMocks());
 
 // --- Tests ---
 
 describe('join_session', () => {
   it('emits session_joined with the question when session is open', async () => {
-    Session.findOne.mockResolvedValue({ code: 'AAA111', questionId: 'q1', status: 'open' });
+    Session.findOne.mockResolvedValue({
+      code: 'AAA111',
+      questionId: 'q1',
+      status: 'open',
+    });
 
     const client = connect();
     client.emit('join_session', 'AAA111');
 
     const result = await waitFor(client, 'session_joined');
-    expect(result.question).toMatchObject({ id: 'q1', text: expect.any(String) });
+    expect(result.question).toMatchObject({
+      id: 'q1',
+      text: expect.any(String),
+    });
     client.disconnect();
   });
 
@@ -63,7 +84,11 @@ describe('join_session', () => {
   });
 
   it('emits error when session is closed', async () => {
-    Session.findOne.mockResolvedValue({ code: 'ZZZ000', questionId: 'q1', status: 'closed' });
+    Session.findOne.mockResolvedValue({
+      code: 'ZZZ000',
+      questionId: 'q1',
+      status: 'closed',
+    });
 
     const client = connect();
     client.emit('join_session', 'ZZZ000');
@@ -76,7 +101,11 @@ describe('join_session', () => {
 
 describe('submit_vote', () => {
   it('broadcasts vote_update with results to the room', async () => {
-    Session.findOne.mockResolvedValue({ code: 'BBB222', questionId: 'q2', status: 'open' });
+    Session.findOne.mockResolvedValue({
+      code: 'BBB222',
+      questionId: 'q2',
+      status: 'open',
+    });
     Vote.find.mockResolvedValue([
       { answerId: 'a1' },
       { answerId: 'a2' },
@@ -101,7 +130,11 @@ describe('submit_vote', () => {
   });
 
   it('emits error when session is closed', async () => {
-    Session.findOne.mockResolvedValue({ code: 'CCC333', questionId: 'q1', status: 'closed' });
+    Session.findOne.mockResolvedValue({
+      code: 'CCC333',
+      questionId: 'q1',
+      status: 'closed',
+    });
 
     const client = connect();
     client.emit('submit_vote', { code: 'CCC333', answerId: 'a1' });
