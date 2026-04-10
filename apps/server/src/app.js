@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import sessionsRouter from './routes/sessions.js';
+import { createSessionsRouter } from './routes/sessions.js';
 import { initSocket } from './socket/index.js';
 
 const app = express();
@@ -11,7 +11,7 @@ const io = new Server(server, {
 });
 
 app.use(express.json());
-app.use('/sessions', sessionsRouter);
+app.use('/sessions', createSessionsRouter(io));
 
 initSocket(io);
 
