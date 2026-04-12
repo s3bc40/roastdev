@@ -24,6 +24,7 @@ export function createSessionsRouter(io) {
     const session = new Session({
       code: generateCode(),
       questionId: question.id,
+      usedQuestionIds: [question.id],
     });
 
     await session.save();

@@ -12,7 +12,10 @@ import { io as ioc } from 'socket.io-client';
 // --- DB mocks (must be hoisted before app import) ---
 
 vi.mock('../models/Session.js', () => ({
-  default: { findOne: vi.fn() },
+  default: {
+    findOne: vi.fn(),
+    findOneAndUpdate: vi.fn().mockResolvedValue({}),
+  },
 }));
 
 vi.mock('../models/Vote.js', () => ({
@@ -141,6 +144,84 @@ describe('submit_vote', () => {
 
     const result = await waitFor(client, 'error');
     expect(result.message).toBe('Session is closed');
+    client.disconnect();
+  });
+});
+
+describe('next_question', () => {
+  it('broadcasts question_changed with a new question to the room', async () => {
+    Session.findOne.mockResolvedValue({
+      code: 'EEE555',
+      questionId: 'q1',
+      usedQuestionIds: ['q1'],
+      status: 'open',
+    });
+
+    const client = connect();
+    client.emit('join_session', 'EEE555');
+    await waitFor(client, 'session_joined');
+
+    client.emit('next_question', 'EEE555');
+    const result = await waitFor(client, 'question_changed');
+
+    expect(result.question).toMatchObject({
+      id: expect.not.stringMatching('q1'),
+      text: expect.any(String),
+    });
+    client.disconnect();
+  });
+
+  it('emits error when session is not found', async () => {
+    Session.findOne.mockResolvedValue(null);
+
+    const client = connect();
+    client.emit('next_question', 'NOPE99');
+
+    const result = await waitFor(client, 'error');
+    expect(result.message).toBe('Session not found');
+    client.disconnect();
+  });
+
+  it('emits error when session is closed', async () => {
+    Session.findOne.mockResolvedValue({
+      code: 'FFF666',
+      questionId: 'q1',
+      usedQuestionIds: ['q1'],
+      status: 'closed',
+    });
+
+    const client = connect();
+    client.emit('next_question', 'FFF666');
+
+    const result = await waitFor(client, 'error');
+    expect(result.message).toBe('Session is closed');
+    client.disconnect();
+  });
+
+  it('emits error when the question catalogue is exhausted', async () => {
+    Session.findOne.mockResolvedValue({
+      code: 'GGG777',
+      questionId: 'q10',
+      usedQuestionIds: [
+        'q1',
+        'q2',
+        'q3',
+        'q4',
+        'q5',
+        'q6',
+        'q7',
+        'q8',
+        'q9',
+        'q10',
+      ],
+      status: 'open',
+    });
+
+    const client = connect();
+    client.emit('next_question', 'GGG777');
+
+    const result = await waitFor(client, 'error');
+    expect(result.message).toBe('No more questions available');
     client.disconnect();
   });
 });
