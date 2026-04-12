@@ -143,6 +143,10 @@
 .btn-ghost:hover {
   border-color: var(--rd-muted);
 }
+.btn-ghost:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
 .btn-sm {
   padding: 8px 16px;
@@ -453,6 +457,42 @@
   display: flex;
   justify-content: flex-end;
   gap: var(--sp-sm);
+}
+
+/* ─── Toast ──────────────────────────────────────────────────── */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.toast {
+  position: fixed;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--rd-surf);
+  border: 1px solid var(--rd-border);
+  border-radius: var(--r-full);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rd-text);
+  z-index: 200;
+  animation: toast-in 0.2s ease;
+  white-space: nowrap;
+}
+.toast-icon {
+  display: flex;
+  align-items: center;
+  color: var(--rd-brand);
 }
 
 /* ─── Footer ─────────────────────────────────────────────────── */
