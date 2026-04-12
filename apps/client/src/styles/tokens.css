@@ -1,0 +1,53 @@
+/* Clown Fish palette — extracted from the RoastDev reference design */
+:root {
+  /* Brand */
+  --rd-brand: #e17000;
+  --rd-brand2: #f88101;
+  --rd-accent: #f8a800;
+
+  /* Surfaces */
+  --rd-bg: #0c0c0c;
+  --rd-surf: #161616;
+  --rd-surf2: #1e1e1e;
+
+  /* Borders & text */
+  --rd-border: #2a2a2a;
+  --rd-text: #fcfcfc;
+  --rd-muted: #888;
+
+  /* Selected answer background */
+  --rd-sel: #1c0e00;
+
+  /* Spacing */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-2xl: 40px;
+
+  /* Border radius */
+  --r-sm: 8px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-full: 9999px;
+
+  /* Typography */
+  --font-base: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'Courier New', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-base);
+  background: var(--rd-bg);
+  color: var(--rd-text);
+  min-height: 100vh;
+}
