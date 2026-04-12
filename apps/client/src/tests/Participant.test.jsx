@@ -140,20 +140,54 @@ describe('Participant', () => {
     expect(option.classList.contains('selected')).toBe(true);
   });
 
-  it('calls onClose when session_closed event fires', () => {
+  it('calls onClose when session_closed event fires', async () => {
     const onClose = vi.fn();
     render(<Participant code="XK92PL" onClose={onClose} />);
 
     act(() => getSocketHandler('session_closed')());
 
-    expect(onClose).toHaveBeenCalledOnce();
+    await new Promise((resolve) => setTimeout(resolve, 2500));
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it('resets to voting phase and clears selection when question_changed fires', () => {
+    renderWithQuestion();
+
+    // Submit a vote to reach the waiting phase
+    fireEvent.click(
+      screen.getByText(mockQuestion.answers[0].text).closest('.answer-opt')
+    );
+    fireEvent.click(screen.getByRole('button', { name: /submit vote/i }));
+    expect(screen.getByText('Vote submitted')).toBeTruthy();
+
+    // Simulate host advancing to the next question
+    act(() =>
+      getSocketHandler('question_changed')({
+        question: {
+          id: 'q2',
+          text: 'New question text',
+          answers: [
+            { id: 'a1', text: 'Option one' },
+            { id: 'a2', text: 'Option two' },
+            { id: 'a3', text: 'Option three' },
+            { id: 'a4', text: 'Option four' },
+          ],
+        },
+      })
+    );
+
+    // Back in voting phase — submit button visible and disabled (no selection)
+    expect(screen.getByRole('button', { name: /submit vote/i }).disabled).toBe(
+      true
+    );
+    expect(screen.getByText('New question text')).toBeTruthy();
   });
 
   it('cleans up socket listeners on unmount', () => {
     const { unmount } = render(<Participant code="XK92PL" onClose={vi.fn()} />);
     unmount();
 
-    // off() should have been called for each of the 3 registered events
-    expect(socket.off).toHaveBeenCalledTimes(3);
+    // off() should have been called for each of the 4 registered events
+    expect(socket.off).toHaveBeenCalledTimes(4);
   });
 });

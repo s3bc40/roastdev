@@ -11,22 +11,110 @@
   },
   {
     "id": "q2",
-    "text": "Which CSS approach do you actually ship to production?",
-    "answers": [
-      { "id": "a1", "text": "Plain CSS, I'm not afraid" },
-      { "id": "a2", "text": "Tailwind or death" },
-      { "id": "a3", "text": "CSS Modules" },
-      { "id": "a4", "text": "CSS-in-JS (styled-components / Emotion)" }
-    ]
-  },
-  {
-    "id": "q3",
     "text": "Tabs or spaces?",
     "answers": [
       { "id": "a1", "text": "Tabs, semantic and accessible" },
       { "id": "a2", "text": "2 spaces, fight me" },
       { "id": "a3", "text": "4 spaces, readable code matters" },
       { "id": "a4", "text": "Whatever Prettier decides" }
+    ]
+  },
+  {
+    "id": "q3",
+    "text": "What is your honest testing philosophy?",
+    "answers": [
+      { "id": "a1", "text": "100% coverage or don't even open the PR" },
+      { "id": "a2", "text": "Just 2-3 happy path E2E tests and vibes" },
+      {
+        "id": "a3",
+        "text": "Testing in production is the only way to be sure"
+      },
+      { "id": "a4", "text": "If it builds, it works (TypeScript is my test)" }
+    ]
+  },
+  {
+    "id": "q4",
+    "text": "What's the verdict on Monorepos?",
+    "answers": [
+      { "id": "a1", "text": "Nx/Turborepo or I'm not touching it" },
+      { "id": "a2", "text": "A giant folder of sadness and dependency hell" },
+      { "id": "a3", "text": "Polyrepos: micro-services mean micro-headaches" },
+      {
+        "id": "a4",
+        "text": "One big repo because I'm too lazy to link packages"
+      }
+    ]
+  },
+  {
+    "id": "q5",
+    "text": "What is your actual deployment habit?",
+    "answers": [
+      { "id": "a1", "text": "Full CI/CD pipeline with blue-green deployment" },
+      { "id": "a2", "text": "Git push and pray" },
+      { "id": "a3", "text": "Dragging files via FTP like it's 2005" },
+      {
+        "id": "a4",
+        "text": "Vercel/Netlify auto-deploy (I don't know what a server is)"
+      }
+    ]
+  },
+  {
+    "id": "q6",
+    "text": "What’s your Code Review style?",
+    "answers": [
+      {
+        "id": "a1",
+        "text": "The Nitpicker: 'You missed a semicolon on line 402'"
+      },
+      { "id": "a2", "text": "The Ghost: LGTM without reading a single line" },
+      {
+        "id": "a3",
+        "text": "The Educator: 50 comments on architectural patterns"
+      },
+      { "id": "a4", "text": "The Destroyer: 'Rewrite the whole thing'" }
+    ]
+  },
+  {
+    "id": "q7",
+    "text": "AI Coding Assistants (Copilot/Cursor/ChatGPT)?",
+    "answers": [
+      { "id": "a1", "text": "I literally forgot how to code without it" },
+      { "id": "a2", "text": "I spend more time fixing its bugs than it saves" },
+      { "id": "a3", "text": "Banned by my paranoid CTO" },
+      {
+        "id": "a4",
+        "text": "I only use it for writing unit tests I don't want to do"
+      }
+    ]
+  },
+  {
+    "id": "q8",
+    "text": "What’s your favorite way to debug?",
+    "answers": [
+      { "id": "a1", "text": "console.log('here1'), console.log('here2')" },
+      { "id": "a2", "text": "Actually using the debugger and breakpoints" },
+      { "id": "a3", "text": "Staring at the code until the bug feels guilty" },
+      { "id": "a4", "text": "Deleting the whole file and starting over" }
+    ]
+  },
+  {
+    "id": "q9",
+    "text": "What is the true purpose of a Daily Standup?",
+    "answers": [
+      { "id": "a1", "text": "To prove to management I am actually awake" },
+      { "id": "a2", "text": "To coordinate complex technical blockers" },
+      { "id": "a3", "text": "15 minutes of lying about what I did yesterday" },
+      { "id": "a4", "text": "To listen to the senior talk for 45 minutes" }
+    ]
+  },
+  {
+    "id": "q10",
+    "text": "What is the biggest lie in software development?",
+    "answers": [
+      { "id": "a1", "text": "'I'll add the documentation later'" },
+      { "id": "a2", "text": "'This is a temporary fix'" },
+      { "id": "a3", "text": "'It worked on my machine'" },
+      { "id": "a4", "text": "'This won't break anything'" }
     ]
   }
 ]

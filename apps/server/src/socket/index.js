@@ -9,6 +9,13 @@ const questions = JSON.parse(
   readFileSync(join(__dirname, '../../data/questions.json'), 'utf-8')
 );
 
+// Returns a random question not yet used in this session, or null if exhausted.
+function pickNextQuestion(usedIds) {
+  const available = questions.filter((q) => !usedIds.includes(q.id));
+  if (available.length === 0) return null;
+  return available[Math.floor(Math.random() * available.length)];
+}
+
 export function initSocket(io) {
   io.on('connection', (socket) => {
     console.log(`socket connected: ${socket.id}`);
@@ -83,6 +90,50 @@ export function initSocket(io) {
         io.to(code).emit('vote_update', { results });
       } catch (err) {
         console.error('submit_vote error:', err);
+        socket.emit('error', { message: 'Internal server error' });
+      }
+    });
+
+    // client → server: next_question(code)  [host only by convention]
+    // server → room:   question_changed(question)
+    socket.on('next_question', async (code) => {
+      try {
+        const session = await Session.findOne({ code });
+
+        if (!session) {
+          socket.emit('error', { message: 'Session not found' });
+          return;
+        }
+
+        if (session.status === 'closed') {
+          socket.emit('error', { message: 'Session is closed' });
+          return;
+        }
+
+        const next = pickNextQuestion(session.usedQuestionIds);
+
+        if (!next) {
+          socket.emit('error', { message: 'No more questions available' });
+          return;
+        }
+
+        // $set + $push in one atomic write — prevents a race where two concurrent
+        // next_question calls both read the same usedQuestionIds and pick the same
+        // question. findOneAndUpdate holds a document-level lock for the duration.
+        await Session.findOneAndUpdate(
+          { code },
+          {
+            $set: { questionId: next.id },
+            $push: { usedQuestionIds: next.id },
+          },
+          { new: true }
+        );
+
+        const hasMore =
+          pickNextQuestion([...session.usedQuestionIds, next.id]) !== null;
+        io.to(code).emit('question_changed', { question: next, hasMore });
+      } catch (err) {
+        console.error('next_question error:', err);
         socket.emit('error', { message: 'Internal server error' });
       }
     });

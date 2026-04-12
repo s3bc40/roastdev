@@ -4,6 +4,17 @@ import socket from '../socket.js';
 import Host from '../pages/Host.jsx';
 import { getSocketHandler, mockQuestion } from './helpers.js';
 
+const mockQuestion2 = {
+  id: 'q2',
+  text: 'Tabs or spaces?',
+  answers: [
+    { id: 'a1', text: 'Tabs' },
+    { id: 'a2', text: '2 spaces' },
+    { id: 'a3', text: '4 spaces' },
+    { id: 'a4', text: 'Whatever Prettier decides' },
+  ],
+};
+
 // vi.mock must live in this file — Vitest hoists it at parse time.
 vi.mock('../socket.js', () => ({
   default: { on: vi.fn(), off: vi.fn(), emit: vi.fn(), connect: vi.fn() },
@@ -97,5 +108,28 @@ describe('Host', () => {
   it('emits join_session with the code on mount', () => {
     render(<Host code="XK92PL" onClose={vi.fn()} />);
     expect(socket.emit).toHaveBeenCalledWith('join_session', 'XK92PL');
+  });
+
+  it('emits next_question when Next question is clicked', () => {
+    render(<Host code="XK92PL" onClose={vi.fn()} />);
+
+    act(() => getSocketHandler('session_joined')({ question: mockQuestion }));
+
+    fireEvent.click(screen.getByRole('button', { name: /next question/i }));
+
+    expect(socket.emit).toHaveBeenCalledWith('next_question', 'XK92PL');
+  });
+
+  it('updates the displayed question when question_changed fires', () => {
+    render(<Host code="XK92PL" onClose={vi.fn()} />);
+
+    act(() => getSocketHandler('session_joined')({ question: mockQuestion }));
+    expect(screen.getByText(mockQuestion.text)).toBeTruthy();
+
+    act(() =>
+      getSocketHandler('question_changed')({ question: mockQuestion2 })
+    );
+
+    expect(screen.getByText(mockQuestion2.text)).toBeTruthy();
   });
 });

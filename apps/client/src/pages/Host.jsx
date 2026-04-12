@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { LuPower, LuShare2 } from 'react-icons/lu';
+import { LuPower, LuShare2, LuSkipForward } from 'react-icons/lu';
 import Layout from '../components/Layout';
 import ConfirmModal from '../components/ConfirmModal';
 import ResultBar from '../components/ResultBar';
 import { useSession } from '../hooks/useSession';
 import { BAR_COLORS, calcPct } from '../utils';
+import socket from '../socket';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL ?? 'http://localhost:3001';
 
 export default function Host({ code, onClose }) {
-  const { question, results } = useSession(code, onClose);
+  const { question, results, hasMore } = useSession(code, onClose);
   const [showConfirm, setShowConfirm] = useState(false);
 
   async function handleClose() {
@@ -65,6 +66,14 @@ export default function Host({ code, onClose }) {
                 </div>
 
                 <div className="action-row">
+                  <button
+                    className="btn-ghost btn-icon btn-sm"
+                    onClick={() => socket.emit('next_question', code)}
+                    disabled={!hasMore}
+                  >
+                    <LuSkipForward size={14} />
+                    {hasMore ? 'Next question' : 'All questions used'}
+                  </button>
                   <button
                     className="btn-danger-outline btn-icon"
                     onClick={() => setShowConfirm(true)}
