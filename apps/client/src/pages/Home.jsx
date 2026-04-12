@@ -85,17 +85,19 @@ export default function Home({ onJoin, onHost }) {
                 autoComplete="off"
                 spellCheck={false}
               />
-              {error && (
-                <p
-                  style={{
-                    color: 'var(--rd-brand)',
-                    fontSize: '13px',
-                    marginTop: '8px',
-                  }}
-                >
-                  {error}
-                </p>
-              )}
+              {/* Always rendered — min-height reserves the space so the
+                  buttons don't jump when the message appears or disappears. */}
+              <p
+                style={{
+                  color: 'var(--rd-brand)',
+                  fontSize: '13px',
+                  marginTop: '8px',
+                  minHeight: '20px',
+                  visibility: error ? 'visible' : 'hidden',
+                }}
+              >
+                {error ?? ''}
+              </p>
               <button
                 type="submit"
                 className="btn-primary btn-icon"
