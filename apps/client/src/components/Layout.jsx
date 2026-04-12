@@ -1,7 +1,10 @@
 import NavBar from './NavBar';
+import Footer from './Footer';
 
 /**
- * Shared page shell: NavBar on top, then whatever the page passes as children.
+ * Shared page shell: NavBar on top, Footer at the bottom, page content
+ * in between. min-height: 100dvh on the wrapper ensures the footer is
+ * always pushed to the bottom even on short pages.
  *
  * Props:
  *   code      — session code shown in the nav (optional)
@@ -12,9 +15,10 @@ import NavBar from './NavBar';
  */
 export default function Layout({ code, showLive, navAction, children }) {
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
       <NavBar code={code} showLive={showLive} navAction={navAction} />
       {children}
+      <Footer />
     </div>
   );
 }

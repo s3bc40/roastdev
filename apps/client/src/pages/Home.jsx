@@ -1,18 +1,10 @@
 import { useState } from 'react';
+import { LuLogIn, LuRadio } from 'react-icons/lu';
 import Layout from '../components/Layout';
 import socket from '../socket';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL ?? 'http://localhost:3001';
 
-/**
- * Home page — two actions:
- *   Join roast: validates the code via GET /sessions/:code before connecting.
- *   Host a session: creates a new session via POST /sessions.
- *
- * Why validate via REST before socket.connect()?
- * It gives a clear synchronous error ("session not found" / "session closed")
- * without ever opening a WebSocket to a dead session.
- */
 export default function Home({ onJoin, onHost }) {
   const [code, setCode] = useState('');
   const [error, setError] = useState(null);
@@ -106,10 +98,11 @@ export default function Home({ onJoin, onHost }) {
               )}
               <button
                 type="submit"
-                className="btn-primary"
+                className="btn-primary btn-icon"
                 style={{ width: '100%', marginTop: '14px' }}
                 disabled={loading}
               >
+                <LuLogIn size={16} />
                 {loading ? 'Joining…' : 'Join roast'}
               </button>
             </form>
@@ -122,11 +115,12 @@ export default function Home({ onJoin, onHost }) {
 
             <button
               type="button"
-              className="btn-ghost"
+              className="btn-ghost btn-icon"
               style={{ width: '100%' }}
               onClick={handleHost}
               disabled={loading}
             >
+              <LuRadio size={16} />
               Host a session
             </button>
           </div>

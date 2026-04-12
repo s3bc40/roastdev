@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LuPower, LuShare2 } from 'react-icons/lu';
 import Layout from '../components/Layout';
 import ConfirmModal from '../components/ConfirmModal';
 import ResultBar from '../components/ResultBar';
@@ -13,11 +14,8 @@ export default function Host({ code, onClose }) {
 
   async function handleClose() {
     await fetch(`${SERVER_URL}/sessions/${code}/close`, { method: 'PATCH' });
-    // Server broadcasts session_closed → useSession's onSessionClosed → onClose()
   }
 
-  // Both the nav button and the content button open the modal first.
-  // The actual close only fires when the host confirms.
   const navAction = {
     label: 'Close session',
     onClick: () => setShowConfirm(true),
@@ -68,9 +66,10 @@ export default function Host({ code, onClose }) {
 
                 <div className="action-row">
                   <button
-                    className="btn-danger-outline"
+                    className="btn-danger-outline btn-icon"
                     onClick={() => setShowConfirm(true)}
                   >
+                    <LuPower size={14} />
                     Close session
                   </button>
                 </div>
@@ -78,7 +77,13 @@ export default function Host({ code, onClose }) {
 
               {/* Right column — hint card */}
               <div className="card" style={{ alignSelf: 'start' }}>
-                <div className="section-label">How it works</div>
+                <div className="section-label">
+                  <LuShare2
+                    size={11}
+                    style={{ display: 'inline', marginRight: '5px', verticalAlign: 'middle' }}
+                  />
+                  Share with participants
+                </div>
                 <p
                   style={{
                     fontSize: '13px',

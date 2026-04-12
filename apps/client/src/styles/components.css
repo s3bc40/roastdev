@@ -59,6 +59,32 @@
   letter-spacing: 0.1em;
 }
 
+/* Modifier that adds an icon before the label in any button */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+/* Copy-code button in the navbar */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 4px 6px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  color: var(--rd-muted);
+  font-family: inherit;
+  transition: color 0.15s;
+}
+.copy-btn:hover {
+  color: var(--rd-text);
+}
+
 /* ─── Badge Live ─────────────────────────────────────────────── */
 .badge-live {
   display: inline-flex;
@@ -427,6 +453,38 @@
   display: flex;
   justify-content: flex-end;
   gap: var(--sp-sm);
+}
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: var(--sp-lg) var(--sp-xl);
+  margin-top: auto;
+  border-top: 1px solid var(--rd-border);
+  font-size: 12px;
+  color: var(--rd-muted);
+}
+.footer-link {
+  color: var(--rd-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-link:hover {
+  color: var(--rd-text);
+}
+.footer-icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.footer-sep {
+  width: 1px;
+  height: 12px;
+  background: var(--rd-border);
+  display: inline-block;
 }
 
 /* ─── Home page ──────────────────────────────────────────────── */

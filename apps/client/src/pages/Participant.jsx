@@ -1,25 +1,12 @@
 import { useState } from 'react';
 import confetti from 'canvas-confetti';
+import { LuClock, LuSend, LuRefreshCw } from 'react-icons/lu';
 import Layout from '../components/Layout';
 import ResultBar from '../components/ResultBar';
 import { useSession } from '../hooks/useSession';
 import { BAR_COLORS, calcPct } from '../utils';
 import socket from '../socket';
 
-/**
- * Participant page — two phases driven by the `phase` state string:
- *
- *   'voting'  — answer grid + submit button
- *   'waiting' — vote confirmed card + live results
- *
- * Why a string instead of a boolean (e.g. hasVoted)?
- * A string phase is self-documenting and extensible — if a third state
- * ('closed') is needed later, no refactor required.
- *
- * canvas-confetti is called directly in handleSubmit — it's a one-shot
- * side effect triggered by a user action, not by the render cycle,
- * so no useEffect is needed.
- */
 export default function Participant({ code, onClose }) {
   const { question, results } = useSession(code, onClose);
   const [selectedId, setSelectedId] = useState(null);
@@ -37,7 +24,6 @@ export default function Participant({ code, onClose }) {
   }
 
   function handleChange() {
-    // Keep selectedId so the previously chosen answer stays highlighted
     setPhase('voting');
   }
 
@@ -46,10 +32,10 @@ export default function Participant({ code, onClose }) {
   if (!question) {
     return (
       <Layout
-      code={code}
-      showLive
-      navAction={{ label: '← Leave', onClick: onClose }}
-    >
+        code={code}
+        showLive
+        navAction={{ label: '← Leave', onClick: onClose }}
+      >
         <div className="page-content">
           <p style={{ color: 'var(--rd-muted)', fontSize: '14px' }}>
             Joining session…
@@ -100,11 +86,12 @@ export default function Participant({ code, onClose }) {
               </div>
 
               <button
-                className="btn-primary"
+                className="btn-primary btn-icon"
                 style={{ width: '100%', marginTop: '16px', padding: '14px' }}
                 onClick={handleSubmit}
                 disabled={!selectedId}
               >
+                <LuSend size={15} />
                 Submit vote
               </button>
             </div>
@@ -130,27 +117,7 @@ export default function Participant({ code, onClose }) {
             <div>
               <div className="waiting-card">
                 <div className="waiting-icon">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    aria-hidden="true"
-                  >
-                    <circle
-                      cx="10"
-                      cy="10"
-                      r="8"
-                      stroke="#E17000"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M10 6v4l2.5 2.5"
-                      stroke="#E17000"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+                  <LuClock size={20} color="#E17000" aria-hidden="true" />
                 </div>
 
                 <div
@@ -182,7 +149,8 @@ export default function Participant({ code, onClose }) {
                   <div className="wdot" />
                 </div>
 
-                <button className="btn-change" onClick={handleChange}>
+                <button className="btn-change btn-icon" onClick={handleChange}>
+                  <LuRefreshCw size={14} />
                   Change my answer
                 </button>
               </div>
