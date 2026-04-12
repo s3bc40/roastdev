@@ -80,7 +80,11 @@ export default function Host({ code, onClose }) {
                 <div className="section-label">
                   <LuShare2
                     size={11}
-                    style={{ display: 'inline', marginRight: '5px', verticalAlign: 'middle' }}
+                    style={{
+                      display: 'inline',
+                      marginRight: '5px',
+                      verticalAlign: 'middle',
+                    }}
                   />
                   Share with participants
                 </div>

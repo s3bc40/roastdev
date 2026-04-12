@@ -33,7 +33,8 @@
   --r-full: 9999px;
 
   /* Typography */
-  --font-base: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  --font-base:
+    -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
   --font-mono: 'Courier New', monospace;
 }
 

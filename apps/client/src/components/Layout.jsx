@@ -15,7 +15,9 @@ import Footer from './Footer';
  */
 export default function Layout({ code, showLive, navAction, children }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}>
+    <div
+      style={{ display: 'flex', flexDirection: 'column', minHeight: '100dvh' }}
+    >
       <NavBar code={code} showLive={showLive} navAction={navAction} />
       {children}
       <Footer />
