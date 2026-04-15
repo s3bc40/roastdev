@@ -23,39 +23,39 @@ The project was built as a learning exercise to practise the full Node.js / Expr
 
 ### Frontend — `apps/client`
 
-| Tool | Role | Why |
-|------|------|-----|
-| **React 19** | UI component model | Industry-standard declarative UI; hooks cover all state needs without a framework |
-| **Vite 8** | Dev server & bundler | Near-instant HMR, native ESM, zero config for React |
-| **Socket.io-client 4** | Real-time transport | Pairs with the server library; handles reconnection and fallback automatically |
-| **react-icons** | Icon set | Tree-shakeable SVG icons, no CSS bundle overhead |
-| **canvas-confetti** | Win animation | Single-purpose, tiny lib — no need to pull in a heavier animation framework |
-| **Vitest + @testing-library/react** | Unit tests | Vitest reuses the Vite config; Testing Library encourages testing behaviour over implementation |
-| **jsdom** | DOM environment for tests | Simulates the browser in Node so component tests run without a real browser |
+| Tool                                | Role                      | Why                                                                                             |
+| ----------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------- |
+| **React 19**                        | UI component model        | Industry-standard declarative UI; hooks cover all state needs without a framework               |
+| **Vite 8**                          | Dev server & bundler      | Near-instant HMR, native ESM, zero config for React                                             |
+| **Socket.io-client 4**              | Real-time transport       | Pairs with the server library; handles reconnection and fallback automatically                  |
+| **react-icons**                     | Icon set                  | Tree-shakeable SVG icons, no CSS bundle overhead                                                |
+| **canvas-confetti**                 | Win animation             | Single-purpose, tiny lib — no need to pull in a heavier animation framework                     |
+| **Vitest + @testing-library/react** | Unit tests                | Vitest reuses the Vite config; Testing Library encourages testing behaviour over implementation |
+| **jsdom**                           | DOM environment for tests | Simulates the browser in Node so component tests run without a real browser                     |
 
 ### Backend — `apps/server`
 
-| Tool | Role | Why |
-|------|------|-----|
-| **Node.js 20** | Runtime | LTS, native ESM support, large ecosystem |
-| **Express 4** | HTTP server | Minimal, unopinionated; enough for a few REST routes without full framework overhead |
-| **Socket.io 4** | WebSocket layer | Rooms, namespaces, and auto-reconnect baked in; pairs perfectly with the client lib |
-| **Mongoose 8** | MongoDB ODM | Schema validation at the application layer, lean query API, easy virtual fields |
-| **MongoDB** | Database | Document model fits session + vote shapes naturally; no rigid schema needed |
-| **dotenv** | Environment config | Keeps secrets out of code; standard Node.js practice |
-| **cors** | CORS middleware | Single-line cross-origin setup for the dev split (`:5173` → `:3001`) |
-| **nodemon** | Dev restart | Watches `src/` and restarts on change — no manual server restarts during development |
-| **Vitest** | Test runner | Same runner as the client; supports multiple projects (unit / integration) in one config |
-| **supertest** | HTTP integration tests | Fires real HTTP requests against the Express app in-process; no network required |
+| Tool            | Role                   | Why                                                                                      |
+| --------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
+| **Node.js 20**  | Runtime                | LTS, native ESM support, large ecosystem                                                 |
+| **Express 4**   | HTTP server            | Minimal, unopinionated; enough for a few REST routes without full framework overhead     |
+| **Socket.io 4** | WebSocket layer        | Rooms, namespaces, and auto-reconnect baked in; pairs perfectly with the client lib      |
+| **Mongoose 8**  | MongoDB ODM            | Schema validation at the application layer, lean query API, easy virtual fields          |
+| **MongoDB**     | Database               | Document model fits session + vote shapes naturally; no rigid schema needed              |
+| **dotenv**      | Environment config     | Keeps secrets out of code; standard Node.js practice                                     |
+| **cors**        | CORS middleware        | Single-line cross-origin setup for the dev split (`:5173` → `:3001`)                     |
+| **nodemon**     | Dev restart            | Watches `src/` and restarts on change — no manual server restarts during development     |
+| **Vitest**      | Test runner            | Same runner as the client; supports multiple projects (unit / integration) in one config |
+| **supertest**   | HTTP integration tests | Fires real HTTP requests against the Express app in-process; no network required         |
 
 ### Tooling — root
 
-| Tool | Role | Why |
-|------|------|-----|
-| **pnpm workspaces** | Monorepo manager | Strict, fast, disk-efficient; workspace protocol links packages without duplication |
-| **Prettier 3** | Formatter | Non-negotiable style enforced at commit time — no formatting debates in review |
-| **ESLint 10 (flat config)** | Linter | Catches real bugs (`no-unused-vars`, `no-undef`); flat config is the modern standard |
-| **GitHub Actions** | CI/CD | Free for public repos; runs format → lint → test on every PR |
+| Tool                        | Role             | Why                                                                                  |
+| --------------------------- | ---------------- | ------------------------------------------------------------------------------------ |
+| **pnpm workspaces**         | Monorepo manager | Strict, fast, disk-efficient; workspace protocol links packages without duplication  |
+| **Prettier 3**              | Formatter        | Non-negotiable style enforced at commit time — no formatting debates in review       |
+| **ESLint 10 (flat config)** | Linter           | Catches real bugs (`no-unused-vars`, `no-undef`); flat config is the modern standard |
+| **GitHub Actions**          | CI/CD            | Free for public repos; runs format → lint → test on every PR                         |
 
 ---
 
@@ -113,11 +113,11 @@ server → client
 
 ## REST API (host only)
 
-| Method | Path | Description |
-|--------|------|-------------|
-| `POST` | `/sessions` | Create a new session; returns the short code |
-| `GET` | `/sessions/:code` | Fetch session state + current question |
-| `PATCH` | `/sessions/:code/close` | Close the session (no more votes accepted) |
+| Method  | Path                    | Description                                  |
+| ------- | ----------------------- | -------------------------------------------- |
+| `POST`  | `/sessions`             | Create a new session; returns the short code |
+| `GET`   | `/sessions/:code`       | Fetch session state + current question       |
+| `PATCH` | `/sessions/:code/close` | Close the session (no more votes accepted)   |
 
 ---
 
@@ -174,9 +174,9 @@ pnpm --filter server dev
 
 **Typical flow:**
 
-1. Open `http://localhost:5173` as the **host** — click *Create session*, copy the code.
+1. Open `http://localhost:5173` as the **host** — click _Create session_, copy the code.
 2. Open a second tab as a **participant** — enter the code to join.
-3. Host clicks *Next question* to advance; participants vote and see live results.
+3. Host clicks _Next question_ to advance; participants vote and see live results.
 
 ---
 
@@ -229,9 +229,9 @@ Config in `.prettierrc`:
 }
 ```
 
-| Command | When to use |
-|---------|-------------|
-| `pnpm format` | Locally, to auto-fix all files |
+| Command             | When to use                                                |
+| ------------------- | ---------------------------------------------------------- |
+| `pnpm format`       | Locally, to auto-fix all files                             |
 | `pnpm format:check` | CI — fails if any file is not formatted (never auto-fixes) |
 
 Prettier runs as a pre-commit hook so formatting issues are caught before they reach the remote.
@@ -247,17 +247,17 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   js.configs.recommended, // catches real JS errors
-  prettier,               // disables rules that conflict with Prettier
+  prettier, // disables rules that conflict with Prettier
 ]);
 ```
 
 `eslint-config-prettier` is intentionally last — it turns off any ESLint style rules that Prettier already owns, so the two tools never fight each other.
 
-| Command | Effect |
-|---------|--------|
-| `pnpm lint` | Lint all workspaces |
-| `pnpm --filter client lint` | Lint client only |
-| `pnpm --filter server lint` | Lint server only |
+| Command                     | Effect              |
+| --------------------------- | ------------------- |
+| `pnpm lint`                 | Lint all workspaces |
+| `pnpm --filter client lint` | Lint client only    |
+| `pnpm --filter server lint` | Lint server only    |
 
 ---
 
@@ -304,7 +304,7 @@ Identical to CI plus a `pnpm build` step that confirms the client Vite build com
 ### Socket.io
 
 - **Rooms** — each session gets its own Socket.io room (keyed by session code). Broadcasting to a room (`io.to(code).emit(...)`) targets only connected participants in that session without looping over sockets manually.
-- **Acknowledgements vs events** — `submit_vote` uses a plain event rather than an acknowledgement callback because the result (`vote_update`) needs to go to *all* participants, not just the one who voted.
+- **Acknowledgements vs events** — `submit_vote` uses a plain event rather than an acknowledgement callback because the result (`vote_update`) needs to go to _all_ participants, not just the one who voted.
 - **Reconnection** — Socket.io clients reconnect automatically on disconnect. The `join_session` handler is idempotent (re-joining the room is safe), so a participant who briefly loses connection rejoins cleanly without server-side cleanup.
 
 ### Testing
